@@ -1,45 +1,109 @@
 # Forecasting Financial Inclusion in Ethiopia
 
-## Project Overview
-This project aims to build a forecasting system that tracks Ethiopia's digital financial transformation using time series methods. It focuses on predicting **Access** (Account Ownership Rate) and **Usage** (Digital Payment Adoption Rate) for the years 2025-2027.
+![Status](https://img.shields.io/badge/Status-Refactored%20%26%20Enriched-success)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Framework](https://img.shields.io/badge/Framework-Modular%20Scientific-orange)
 
-## Repository Structure
-- `data/`: 
-  - `raw/`: Starter datasets including `ethiopia_fi_unified_data.csv` and `reference_codes.csv`.
-  - `processed/`: Intermediate data files used for modeling.
-- `notebooks/`: 
-  - `01_data_exploration_and_enrichment.ipynb`: Task 1 - Data profiling and enrichment.
-  - `02_exploratory_data_analysis.ipynb`: Task 2 - Visualizations and insights.
-- `src/`: Core logic and modular components.
-  - `data_loader.py`: Shared functions for loading data.
-- `dashboard/`: Streamlit dashboard for interactive visualization.
-- `models/`: Serialized models and configurations.
-- `reports/`: Documentation and generated figures.
+An end-to-end analytical framework designed to forecast financial inclusion trajectories in Ethiopia. This project integrates unified datasets, explicitly models policy-impact relationships, and provides a modular architecture for scalable time-series forecasting and policy simulation.
 
-## Setup Instructions
+## 🚀 Key Features
 
-### 1. Environment Setup
-It is recommended to use a virtual environment:
-```powershell
-python -m venv .venv
-.venv\Scripts\activate
+- **Modular Design Pattern**: Centralized technical infrastructure in `src/` for data lifecycle management, visualization, and configuration.
+- **Advanced Data Enrichment**: Integrates 2024 mobile money baselines and structural policy events (e.g., IMF Extended Credit Facility) into the unified dataset.
+- **Explicit Causal Linkage**: Implements `parent_id`-based `impact_link` modeling to track the relationship between specific events (Telebirr/M-Pesa launches) and their quantitative impacts on digital inclusion.
+- **Interactive EDA**: Deep-dive exploratory analysis powered by robust processing utilities.
+- **Modular Dashboarding**: Real-time visualization of digital pillars via a Streamlit-based interface.
+- **Automated Verification**: Integrated test suite for data transformations and loading logic.
+
+---
+
+## 🏗 System Architecture
+
+The project follows a modular scientific computing structure to ensure reproducibility and maintainability.
+
+```mermaid
+graph TD
+    A[Raw Data] --> B[Notebook 01: Enrichment]
+    B --> C{Data Loader Utility}
+    C --> D[Processed Enriched Data]
+    D --> E[Notebook 02: EDA]
+    D --> F[Dashboard: Streamlit]
+    G[src/utils] -.-> C
+    G -.-> E
+    G -.-> F
 ```
 
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+- **`src/config.py`**: The single source of truth for filesystem paths and plotting aesthetics.
+- **`src/utils/data_loader.py`**: High-level API for data ingestion, categorical normalization, and datetime alignment.
+- **`src/utils/plotting.py`**: Domain-specific visualization wrappers for temporal coverage and distribution analysis.
 
-### 3. Running EDA
-Open the Jupyter notebooks in the `notebooks/` directory to follow the analysis.
+---
 
-### 4. Running the Dashboard
-To see the interactive insights:
+## 📊 Data & Enrichment Pipeline
+
+### 1. Unified Dataset Construction
+The framework utilizes a long-format schema that accommodates diverse record types:
+- **Observations**: Quantitative metrics (e.g., Total Mobile Money Accounts).
+- **Events**: Qualitative policy changes or infrastructure launches.
+- **Impact Links**: Explicit directional arrows connecting Events to Observations.
+
+### 2. Strategic Enrichment
+The baseline dataset has been programmatically enhanced in `notebooks/01_data_exploration_and_enrichment.ipynb` with:
+- **2024 Benchmarks**: Estimates from National Bank of Ethiopia (NBE) reports.
+- **Policy Drivers**: Significant events such as the IMF ECF approval and telecom liberalization mileposts.
+- **Relational Integrity**: Linking `record_id` 14 (Telebirr Launch) to subsequent growth metrics via `parent_id` attributes.
+
+---
+
+## 🛠 Setup & Installation
+
+### Prerequisites
+- Python 3.9+
+- Pip or Conda
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/soltsega/Forecasting-Financial-Inclusion-in-Ethiopia.git
+   cd Forecasting-Financial-Inclusion-in-Ethiopia
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+## 📖 Usage
+
+### Research & Analysis
+Run the Jupyter Notebooks to regenerate processed data or explore trends:
+- `notebooks/01_data_exploration_and_enrichment.ipynb`: Core enrichment engine.
+- `notebooks/02_exploratory_data_analysis.ipynb`: Statistical exploration of digital inclusion pillars.
+
+### Running the Dashboard
+Launch the interactive visualization suite:
 ```bash
 streamlit run dashboard/app.py
 ```
 
-## Task 1 & 2 Highlights
-- **Enriched Dataset**: Added 2024 mobile money baselines and IMF policy events.
-- **Key Insight**: Identified the "Inclusion Slowdown" (2021-2024) where registered users grew faster than actual ownership.
-- **Data Quality**: Documented temporal sparsity and supply-side reporting bias.
+### Running Tests
+Execute the verification suite:
+```bash
+pytest tests/
+```
+
+---
+
+## 🗺 Roadmap
+- [ ] **Task 3**: Advanced Time-Series Modeling (ARIMA/Prophet) utilizing enriched causal links.
+- [ ] **Task 4**: Policy Simulation Engine to model "What-If" scenarios for telecom tax changes.
+- [ ] **Task 5**: Automated weekly data ingestion from the NBE API.
+
+---
+
+## ⚖ License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+**Author**: [Solomon T.](https://github.com/soltsega)
