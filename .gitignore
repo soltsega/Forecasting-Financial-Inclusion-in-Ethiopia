@@ -26,6 +26,7 @@ wheels/
 
 # Virtual Environment
 venv/
+.venv/
 ENV/
 
 # Data
@@ -35,13 +36,12 @@ data/processed/*
 # OS
 .DS_Store
 Thumbs.db
-data/Additional Data Points Guide.xlsx
-data/ethiopia_fi_unified_data.xlsx
-data/reference_codes.xlsx
-data/raw/reference_codes.xlsx
+data/*.xlsx
+data/raw/*.xlsx
 data/raw/Additional Data Points Guide.xlsx - A. Alternative Baselines.csv
+.gitignore
 data/raw/Additional Data Points Guide.xlsx - B. Direct Corrln.csv
-data/raw/reference_codes - reference_codes.csv
-data/raw/Additional Data Points Guide.xlsx - C. Indirect Corrln.csv
 data/raw/Additional Data Points Guide.xlsx - D. Market Naunces.csv
+data/raw/Additional Data Points Guide.xlsx - C. Indirect Corrln.csv
+data/raw/reference_codes - reference_codes.csv
 data/raw/ethiopia_fi_unified_data - ethiopia_fi_unified_data.csv
