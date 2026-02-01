@@ -21,10 +21,7 @@ import os
 import sys
 
 # Add src to path
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-src_path = os.path.join(project_root, 'src')
-if src_path not in sys.path:
-    sys.path.insert(0, src_path)
+sys.path.append(os.path.abspath("../src"))
 
 from utils.data_loader import load_data, preprocess_data
 from utils.plotting import set_plot_style, plot_temporal_coverage, plot_confidence_distribution
@@ -39,9 +36,12 @@ set_plot_style()
 # In[7]:
 
 
-df = load_data()
+from config import ENRICHED_DATA_PATH
+df = load_data(ENRICHED_DATA_PATH)
 df = preprocess_data(df)
 obs_df = df[df['record_type'] == 'observation'].copy()
+# Derive 'year' column to avoid KeyError
+obs_df['year'] = obs_df['observation_date'].dt.year
 
 print("--- Summary by Record Type ---")
 print(df['record_type'].value_counts())
