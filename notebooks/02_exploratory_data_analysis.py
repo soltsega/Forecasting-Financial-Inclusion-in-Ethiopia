@@ -21,7 +21,10 @@ import os
 import sys
 
 # Add src to path
-sys.path.append(os.path.abspath("../src"))
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+src_path = os.path.join(project_root, 'src')
+if src_path not in sys.path:
+    sys.path.insert(0, src_path)
 
 from utils.data_loader import load_data, preprocess_data
 from utils.plotting import set_plot_style, plot_temporal_coverage, plot_confidence_distribution
@@ -38,6 +41,7 @@ set_plot_style()
 
 df = load_data()
 df = preprocess_data(df)
+obs_df = df[df['record_type'] == 'observation'].copy()
 
 print("--- Summary by Record Type ---")
 print(df['record_type'].value_counts())
