@@ -46,3 +46,7 @@ data/raw/Additional Data Points Guide.xlsx - C. Indirect Corrln.csv
 data/raw/reference_codes - reference_codes.csv
 data/raw/ethiopia_fi_unified_data - ethiopia_fi_unified_data.csv
 INTERIM_REPORT.md
+debug_output.txt
+task3_data_inspection.txt
+task3_execution_log.txt
+task3_execution_log2.txt
