@@ -3,9 +3,9 @@ numpy
 matplotlib
 seaborn
 statsmodels
-streamlit
+streamlit==1.28.0
 scikit-learn
 plotly
 ipykernel
 pytest
-altair<5.0
+altair==4.2.2
