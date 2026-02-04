@@ -183,8 +183,8 @@ if df is not None:
             recent_events = events_df.sort_values('observation_date', ascending=False).head(5)
             for _, event in recent_events.iterrows():
                 with st.expander(f"📅 {event['observation_date'].strftime('%Y-%m-%d')}: {event['indicator']}"):
-                    st.write(f"**Category**: {event['category']}")
-                    st.write(f"**Description**: {event.get('notes', 'No description available')}")
+                    st.write(f"**Category**: {event.get('category', 'General') if pd.notna(event.get('category')) else 'General'}")
+                    st.write(f"**Description**: {event.get('notes', 'No description available') if pd.notna(event.get('notes')) and event.get('notes').strip() else 'No description available'}")
 
     # Historical Trends Page
     elif page == "📊 Historical Trends":
@@ -268,6 +268,9 @@ if df is not None:
         if not events_df.empty:
             # Event timeline
             st.subheader("Event Timeline")
+            
+            # Handle empty categories
+            events_df['category'] = events_df['category'].fillna('General')
             
             fig_events = px.timeline(
                 events_df,
