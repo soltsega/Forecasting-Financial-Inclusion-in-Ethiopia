@@ -59,7 +59,7 @@ page = st.sidebar.selectbox(
 def load_enriched_data():
     """Load the enriched dataset from Task 3."""
     try:
-        df = pd.read_csv("../data/processed/ethiopia_fi_enriched_data.csv")
+        df = pd.read_csv("data/processed/ethiopia_fi_enriched_data.csv")
         df['observation_date'] = pd.to_datetime(df['observation_date'], format='mixed', errors='coerce')
         return df
     except Exception as e:
@@ -70,7 +70,7 @@ def load_enriched_data():
 def load_forecast_data():
     """Load forecast data from Task 4."""
     try:
-        forecast_df = pd.read_csv("../data/processed/forecasts_2025_2027.csv")
+        forecast_df = pd.read_csv("data/processed/forecasts_2025_2027.csv")
         forecast_df['date'] = pd.to_datetime(forecast_df['date'])
         return forecast_df
     except Exception as e:
@@ -81,8 +81,8 @@ def load_forecast_data():
 def load_summary_data():
     """Load summary tables from Task 4."""
     try:
-        access_summary = pd.read_csv("../data/processed/access_forecast_summary.csv")
-        usage_summary = pd.read_csv("../data/processed/usage_forecast_summary.csv")
+        access_summary = pd.read_csv("data/processed/access_forecast_summary.csv")
+        usage_summary = pd.read_csv("data/processed/usage_forecast_summary.csv")
         return access_summary, usage_summary
     except Exception as e:
         st.error(f"Error loading summary data: {e}")
