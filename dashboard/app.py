@@ -111,11 +111,13 @@ if df is not None:
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            latest_access = obs_df[obs_df['indicator_code'] == ACCESS_INDICATOR]['value_numeric'].max()
+            access_data = obs_df[obs_df['indicator_code'] == ACCESS_INDICATOR]['value_numeric']
+            latest_access = access_data.max() if not access_data.empty else 0.0
             st.metric("Account Ownership", f"{latest_access:.1f}%", "2024")
         
         with col2:
-            latest_usage = obs_df[obs_df['indicator_code'] == USAGE_INDICATOR]['value_numeric'].max()
+            usage_data = obs_df[obs_df['indicator_code'] == USAGE_INDICATOR]['value_numeric']
+            latest_usage = usage_data.max() if not usage_data.empty else 0.0
             st.metric("Digital Payments", f"{latest_usage:.1f}%", "2024")
         
         with col3:
@@ -251,15 +253,21 @@ if df is not None:
             if len(access_trend) >= 2:
                 first_access = access_trend.iloc[0]['value_numeric']
                 last_access = access_trend.iloc[-1]['value_numeric']
-                access_growth = ((last_access - first_access) / first_access) * 100
-                st.metric("Account Ownership Growth", f"{access_growth:.1f}%", "2014-2024")
+                if pd.notna(first_access) and pd.notna(last_access) and first_access > 0:
+                    access_growth = ((last_access - first_access) / first_access) * 100
+                    st.metric("Account Ownership Growth", f"{access_growth:.1f}%", "2014-2024")
+                else:
+                    st.metric("Account Ownership Growth", "N/A", "Insufficient data")
         
         with col2:
             if len(usage_trend) >= 2:
                 first_usage = usage_trend.iloc[0]['value_numeric']
                 last_usage = usage_trend.iloc[-1]['value_numeric']
-                usage_growth = ((last_usage - first_usage) / first_usage) * 100 if first_usage > 0 else 0
-                st.metric("Digital Payment Growth", f"{usage_growth:.1f}%", "2014-2024")
+                if pd.notna(first_usage) and pd.notna(last_usage) and first_usage > 0:
+                    usage_growth = ((last_usage - first_usage) / first_usage) * 100
+                    st.metric("Digital Payment Growth", f"{usage_growth:.1f}%", "2014-2024")
+                else:
+                    st.metric("Digital Payment Growth", "N/A", "Insufficient data")
 
     # Event Analysis Page
     elif page == "🎯 Event Analysis":
